@@ -14,4 +14,4 @@ async def crear_formulario(form: ContactForm):
         # await db...
         pass
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error al guardar: {str(e)}")f
+        raise HTTPException(status_code=500, detail=f"Error al guardar: {str(e)}")

@@ -1,18 +1,10 @@
-# instalamos el modulo para trabajar con mongo.
+# instalamos el modulo para trabajar con mongodb.
 # pip install motor
-'''
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
-
-# Usa una URI por defecto si no hay variable de entorno
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-client = AsyncIOMotorClient(MONGO_URI)
-db = client.hestia_db  # Nombre de la base de datos
-'''
-
 from motor.motor_asyncio import AsyncIOMotorClient
-
-#CONN A MONGODB LOCAL (DOCKER)
-client = AsyncIOMotorClient("mongodb://admin:alejandrols@localhost:27017")
-db = client["aspm-tool"] # base de datos
-users_collection = db["users"] # Coleccion de usuarios
+from dotenv import load_dotenv
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+client = AsyncIOMotorClient(MONGO_URI)
+db = client["aspm-tool"]
+users_collection = db["users"]
