@@ -20,7 +20,7 @@ export default function Contact() {
     // console.log(form);
     const enviarDatos = async (datos) => {
         try {
-            const res = await fetch('http://localhost:8000/forms/', {
+            const res = await fetch('http://localhost:8000/contact/v1/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datos)

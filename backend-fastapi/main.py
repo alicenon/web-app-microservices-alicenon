@@ -10,12 +10,14 @@ from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
 import utils, database, schemas
+from src.contact.api.forms_controller import router as forms_routerv2
+
 
 # Configura OAuth2PasswordBearer
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 app = FastAPI(
-    title="Tu API",
+    title="Apis de Autenticación y Contacto",
     description="API para autenticación con JWT",
     version="0.1.0",
     # Esto hace que Swagger UI use el método correcto
@@ -104,3 +106,7 @@ app.include_router(forms_router)
 @app.get("/contact/")
 async def contacto_get():
     return {"mensaje": "Por favor, usa el formulario para enviarnos un mensaje."}
+
+# ************* FORMS ENDPOINT CLEAN ARCHITECTURE MODE**************
+app.include_router(forms_routerv2)
+# Fin del archivo main.py
