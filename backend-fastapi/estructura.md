@@ -3,6 +3,7 @@
 2. [Segundo apartado](#idv2-0)
 3. [Tercer apartado](#idv3-0)
 4. [Cuarto apartado](#idv3-1)
+5. [Quinto apartado](#idv3-2)
 ---
 
 <div id='idv1-0'></div>
@@ -33,7 +34,7 @@ backend/
 
 <div id='idv3-0'></div>
 
-## 📁 v 3.0.0 Estructura final (Clean Architeccccturrrr) 
+## 📁 v 3.0.0 Estructura final (Clean Architecture) 
 ```zsh
 backend/
 ├── src/                         ← Todo tu código principal
@@ -70,7 +71,7 @@ backend/
 
 <div id='idv3-1'></div>
 
-## v 3.0.1 Estructura final (Clean Architeccccturrrr)
+## 📁 v 3.0.1 Estructura final (Clean Architecture)
 En Python, un directorio se convierte en un paquete si contiene un archivo __init__.py. Esto permite:
 
 - Importar módulos desde subdirectorios.
@@ -105,4 +106,16 @@ backend/
 ├── requirements.txt
 ├── Dockerfile
 └── docker-compose.yml
+```
+
+<div id='idv3-2'></div>
+
+## 📁 v 3.0.2 Estructura  (Clean Architecture) Futura de ejemplo.
+```zsh
+src/
+├── contact/
+│   ├── application/          ← Use Cases
+│   ├── domain/              ← Entidades y reglas de negocio
+│   ├── infrastructure/      ← Conexiones externas (DB, APIs, etc.)
+│   └── presentation/        ← Controladores/endpoints
 ```

@@ -1,17 +1,25 @@
 # ejemplo de usar el contact de React
 from fastapi import FastAPI
-
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from routes.forms import router as forms_router
 
 # TRY AUTH2 30/10/25
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
+from src.contact.infrastructure.database import close_mongo_connection, connect_to_mongo
 import utils, database, schemas
 from src.contact.api.forms_controller import router as forms_routerv2
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await connect_to_mongo()
+    yield
+    # Shutdown
+    await close_mongo_connection()
 
 # Configura OAuth2PasswordBearer
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -21,7 +29,8 @@ app = FastAPI(
     description="API para autenticación con JWT",
     version="0.1.0",
     # Esto hace que Swagger UI use el método correcto
-    swagger_ui_parameters={"defaultModelsExpandDepth": -1}
+    swagger_ui_parameters={"defaultModelsExpandDepth": -1},
+    lifespan=lifespan
 )
 # Configuración CORS para permitir peticiones desde React (localhost:3000)
 app.add_middleware(
@@ -94,10 +103,6 @@ async def perfil(current_user: CurrentUser):
 @app.get("/")
 def home():
     return {"status": "OK", "mensaje": "Backend corriendo"}
-
-# ************* FORMS ENDPOINT**************
-app.include_router(forms_router)
-
 # ************ LOGIN ENDPOINTS***************
 # app.post("/register")
 
@@ -107,6 +112,10 @@ app.include_router(forms_router)
 async def contacto_get():
     return {"mensaje": "Por favor, usa el formulario para enviarnos un mensaje."}
 
+
+
 # ************* FORMS ENDPOINT CLEAN ARCHITECTURE MODE**************
-app.include_router(forms_routerv2)
+# app.include_router(forms_routerv2)
+from src.contact.api.forms_controller import router as contact_router
+app.include_router(contact_router, prefix="/contact/v1")
 # Fin del archivo main.py
